@@ -16,7 +16,9 @@ RUN npm run build
 # --- Estágio de produção ---
 FROM nginx:alpine AS prod
 # Copia a pasta de construção gerada no estágio 'build' para o diretório padrão do Nginx
-COPY --from=build /app/build /usr/share/nginx/html 
+COPY --from=build /app/build /usr/share/nginx/html
+# Copia o arquivo de configuração personalizado do Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Expõe a porta 80 (padrão para Nginx)
 EXPOSE 80
 # O Nginx inicia automaticamente com o CMD padrão dele
